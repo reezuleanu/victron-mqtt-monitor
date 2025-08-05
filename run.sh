@@ -5,6 +5,6 @@ export SMTP_SERVER=""
 export SMTP_PORT=0
 export SMTP_EMAIL=""
 export SMTP_PASSWORD=""
-export EMAIL_RECIPIENTS=[""]
+export EMAIL_RECIPIENTS='[""]'
 
 docker-compose up -d

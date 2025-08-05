@@ -21,10 +21,6 @@ WORKDIR /app
 # install compiled package
 COPY --from=builder /app/dist/*.whl .
 
-# update keys
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gnupg ca-certificates
-
 RUN pip install --no-cache-dir *.whl && rm *.whl
 
 CMD ["python", "-m", "victron_mqtt_monitor.main"]
