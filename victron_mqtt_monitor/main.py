@@ -1,6 +1,8 @@
 import time
 import json
 
+from loguru import logger
+
 from victron_mqtt_monitor.settings import config
 from victron_mqtt_monitor.clients.mqtt_client import MQTTClient
 
@@ -9,10 +11,10 @@ client = MQTTClient()
 
 rc = client.connect(config.BROKER_URL, keepalive=50)
 if rc.value == 0:
-    print(f"Client connected to {config.BROKER_URL} successfully")
+    logger.info(f"Client connected to {config.BROKER_URL} successfully")
 rc, _ = client.subscribe("N/#")
 if rc.value == 0:
-    print("Subscribed to topics successfully")
+    logger.info("Subscribed to topics successfully")
 
 
 try:

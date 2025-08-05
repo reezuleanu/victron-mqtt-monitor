@@ -2,6 +2,7 @@ import json
 
 import paho.mqtt.client as mqtt
 from paho.mqtt.enums import CallbackAPIVersion, MQTTProtocolVersion
+from loguru import logger
 
 from victron_mqtt_monitor.settings import config
 from victron_mqtt_monitor.interfaces import Tree, VictronStats, BatteryInfo
@@ -48,9 +49,9 @@ def callback(client, userdata, flags: mqtt.MQTTMessage, rc=None):
 
     if flags.topic == f"N/{config.VICTRON_ID}/system/0/Batteries":
         battery_stats = BatteryInfo(**decoded_message["value"][0])
-        print(battery_stats)
+        logger.info(battery_stats)
         # stats = VictronStats(**tree["N"][config.VICTRON_ID]["system"]["0"])
-        # print(stats.Batteries[0])
+        # logger.info(stats.Batteries[0])
 
         # TODO fix this, this is horrible
         local_time = get_local_datetime()

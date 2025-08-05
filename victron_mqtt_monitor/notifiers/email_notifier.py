@@ -2,6 +2,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+from loguru import logger
+
 from victron_mqtt_monitor.settings import config
 from victron_mqtt_monitor.notifiers.base import BaseNotifier
 
@@ -26,9 +28,9 @@ class EmailNotifier(BaseNotifier):
                 server.starttls()
                 server.login(config.SMTP_EMAIL, config.SMTP_PASSWORD)
                 server.sendmail(config.SMTP_EMAIL, receiver_email, msg.as_string())
-                print(f"Email sent to {receiver_email} successfully!")
+                logger.info(f"Email sent to {receiver_email} successfully!")
             except Exception as e:
-                print(f"Error sending email to {receiver_email}: {e}")
+                logger.exception(f"Error sending email to {receiver_email}: {e}")
             finally:
                 server.quit()
 
