@@ -1,0 +1,13 @@
+services:
+  victron-mqtt-monitor:
+    container_name: victron-mqtt-monitor
+    build: .
+    environment:
+      - BROKER_URL=${BROKER_URL}
+      - VICTRON_ID=${VICTRON_ID}
+
+      - SMTP_SERVER=${SMTP_SERVER}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_EMAIL=${SMTP_EMAIL}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - EMAIL_RECIPIENTS=${EMAIL_RECIPIENTS}
