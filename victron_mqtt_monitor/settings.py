@@ -1,10 +1,20 @@
+from enum import Enum
+
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
+class DEPLOYMENT_TYPES(str, Enum):
+    DEV = "dev"
+    PROD = "prod"
+
+
 class Settings(BaseSettings):
+
+    DEPLOYMENT: DEPLOYMENT_TYPES = "prod"
+
     # victron mqtt settings
     VICTRON_ID: str
     BROKER_URL: str

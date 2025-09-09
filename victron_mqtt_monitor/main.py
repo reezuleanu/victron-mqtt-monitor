@@ -3,9 +3,11 @@ import json
 
 from loguru import logger
 
+from victron_mqtt_monitor.utils import init_logger
 from victron_mqtt_monitor.settings import config
 from victron_mqtt_monitor.clients.mqtt_client import MQTTClient
 
+init_logger(config.DEPLOYMENT)
 
 client = MQTTClient()
 
