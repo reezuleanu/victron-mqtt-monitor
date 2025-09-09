@@ -23,4 +23,7 @@ COPY --from=builder /app/dist/*.whl .
 
 RUN pip install --no-cache-dir *.whl && rm *.whl
 
+# disable docker log buffering
+ENV PYTHONUNBUFFERED=1
+
 CMD ["python", "-m", "victron_mqtt_monitor.main"]
