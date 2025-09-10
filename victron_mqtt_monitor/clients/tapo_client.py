@@ -1,4 +1,5 @@
 import asyncio
+from typing import AsyncGenerator
 
 from tapo import ApiClient
 
@@ -15,12 +16,12 @@ class TapoClient:
             print(await device.get_device_info_json())
             await asyncio.sleep(1)
 
-    async def read_p110_power(self, ip_address: str) -> None:
+    async def read_p110_power(self, ip_address: str) -> AsyncGenerator[int, None]:
         device = await self._client.p110(ip_address)
 
         while True:
             result = await device.get_current_power()
-            print(result.to_dict())
+            yield result.current_power
             await asyncio.sleep(1)
 
     async def switch(self, ip_address: str, state: bool) -> None:
