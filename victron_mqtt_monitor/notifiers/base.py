@@ -3,5 +3,5 @@ from abc import ABC, abstractmethod
 
 class BaseNotifier(ABC):
     @abstractmethod
-    def notify() -> None:
+    def notify(message: str) -> None:
         raise NotImplementedError

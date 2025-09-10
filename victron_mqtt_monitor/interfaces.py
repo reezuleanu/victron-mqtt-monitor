@@ -11,6 +11,24 @@ class Tree(dict):
             current = current[part]
         current[parts[-1]] = value
 
+    def fetch_nested_value(self, topic: str) -> any:
+        """Fetch a nested value from the hierarchy
+
+        Args:
+            topic (str): the key hierarchy, separated by dots
+
+        Returns:
+            any: the value in that topic
+        """
+
+        parts = topic.split(".")
+        current = self
+        for part in parts[:-1]:
+            if not current.get(part):
+                current[part] = {}
+            current = current[part]
+        return current.get(parts[-1])
+
 
 class BatteryInfo(BaseModel):
     """
