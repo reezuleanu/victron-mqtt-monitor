@@ -31,8 +31,3 @@ class BaseAlert(ABC):
         """Make alarm triggerable again"""
 
         self.alerted = False
-
-    def __add__(self, other):
-        assert isinstance(other, BaseAlert), "Alerts are only addable to other alerts"
-
-        self.subalerts.append(other)
