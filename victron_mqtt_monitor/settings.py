@@ -13,6 +13,8 @@ class DEPLOYMENT_TYPES(str, Enum):
 
 class Settings(BaseSettings):
 
+    APP_NAME: str = ""
+
     DEPLOYMENT: DEPLOYMENT_TYPES = "prod"
 
     # victron mqtt settings

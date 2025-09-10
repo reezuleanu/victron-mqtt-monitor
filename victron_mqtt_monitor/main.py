@@ -7,7 +7,7 @@ from victron_mqtt_monitor.utils import init_logger
 from victron_mqtt_monitor.settings import config
 from victron_mqtt_monitor.clients.mqtt_client import MQTTClient
 
-init_logger(config.DEPLOYMENT)
+init_logger(config.DEPLOYMENT, config.APP_NAME)
 
 client = MQTTClient()
 

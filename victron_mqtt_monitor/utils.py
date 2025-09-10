@@ -12,7 +12,7 @@ def get_local_datetime() -> datetime:
     return datetime.now(get_localzone())
 
 
-def init_logger(deployment_type: DEPLOYMENT_TYPES) -> None:
+def init_logger(deployment_type: DEPLOYMENT_TYPES, app_name: str) -> None:
     """Initialize the loguru logger based on the deployment type"""
 
     logger.remove()
@@ -23,11 +23,11 @@ def init_logger(deployment_type: DEPLOYMENT_TYPES) -> None:
             def json_sink(message):
                 record = message.record
                 json_record = {
+                    "app_name": app_name,
                     "time": record["time"].isoformat(),
-                    "level": record["level"].name,  # flatten the dict
+                    "level": record["level"].name,
                     "name": record["name"],
                     "function": record["function"],
-                    # "line": record["line"],
                     "message": record["message"],
                     "extra": record["extra"],
                 }
@@ -38,7 +38,7 @@ def init_logger(deployment_type: DEPLOYMENT_TYPES) -> None:
         case DEPLOYMENT_TYPES.DEV:
 
             def dev_formatting(message) -> str:
-                format = f"<cyan>[{{time}}][{{level}}][{{name}}][{{function}}]</cyan> {{message}}"
+                format = f"<cyan>{f'[{app_name}]' if app_name else ''}[{{time}}][{{level}}][{{name}}][{{function}}]</cyan> {{message}}"
                 if message.get("extra"):
                     format += " <yellow>[{extra}]</yellow>"
                 format += "\n"
