@@ -22,3 +22,17 @@ class TapoClient:
             result = await device.get_current_power()
             print(result.to_dict())
             await asyncio.sleep(1)
+
+    async def switch(self, ip_address: str, state: bool) -> None:
+        """Turn the device on or off
+
+        Args:
+            ip_address (str): address of the device
+            state (bool): true for on, false for off
+        """
+        device = await self._client.p110(ip_address)
+
+        if state:
+            await device.on()
+        else:
+            await device.off()
