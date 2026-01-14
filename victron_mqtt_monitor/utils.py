@@ -4,7 +4,9 @@ import json
 
 from tzlocal import get_localzone
 from loguru import logger
+import i18n
 
+from victron_mqtt_monitor.constants import LANGUAGE_OPTIONS
 from victron_mqtt_monitor.settings import DEPLOYMENT_TYPES
 
 
@@ -51,3 +53,22 @@ def init_logger(deployment_type: DEPLOYMENT_TYPES, app_name: str) -> None:
             exit(1)
 
     logger.info("Logger initialized successfully")
+
+
+def init_i18n(language: LANGUAGE_OPTIONS = "en"):
+    try:
+        settings = {
+            "locale": str(language),
+            "load_path": ["victron_mqtt_monitor/localization/packs"],
+            "filename_format": "{locale}.{format}",
+            "file_format": "yaml",
+            "enable_memoization": True,
+        }
+
+        for k, v in settings.items():
+            i18n.set(k, v)
+
+        logger.info("i18n initialized successfully")
+        logger.info(f"i18n set locale: {i18n.get('locale')}")
+    except Exception as e:
+        logger.exception(f"Could not initialize i18n, reason: {str(e)}")

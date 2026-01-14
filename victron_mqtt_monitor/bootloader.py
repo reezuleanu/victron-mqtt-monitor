@@ -4,7 +4,7 @@ from threading import Thread
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from victron_mqtt_monitor.utils import init_logger
+from victron_mqtt_monitor.utils import init_logger, init_i18n
 from victron_mqtt_monitor.settings import config
 from victron_mqtt_monitor.api import router
 from victron_mqtt_monitor.monitors.victron_monitor import VictronMonitor
@@ -12,6 +12,7 @@ from victron_mqtt_monitor.alerts.victron import BatteryAlert
 
 
 init_logger(config.DEPLOYMENT, config.APP_NAME)
+init_i18n(config.LOCALE)
 
 
 monitor = VictronMonitor(

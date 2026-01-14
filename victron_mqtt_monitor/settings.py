@@ -1,14 +1,9 @@
-from enum import Enum
-
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 
+from victron_mqtt_monitor.constants import DEPLOYMENT_TYPES, LANGUAGE_OPTIONS
+
 load_dotenv()
-
-
-class DEPLOYMENT_TYPES(str, Enum):
-    DEV = "dev"
-    PROD = "prod"
 
 
 class Settings(BaseSettings):
@@ -27,6 +22,8 @@ class Settings(BaseSettings):
     SMTP_EMAIL: str
     SMTP_PASSWORD: str
     EMAIL_RECIPIENTS: list[str]
+
+    LOCALE: LANGUAGE_OPTIONS = "en"
 
 
 config = Settings()
