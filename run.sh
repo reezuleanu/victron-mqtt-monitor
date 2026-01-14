@@ -7,4 +7,9 @@ export SMTP_EMAIL=""
 export SMTP_PASSWORD=""
 export EMAIL_RECIPIENTS='[""]'
 
+export APP_NAME=""
+export DEPLOYMENT=""    # type of deployment, dev or prod
+
+export LOCALE="en"
+
 docker-compose up -d
