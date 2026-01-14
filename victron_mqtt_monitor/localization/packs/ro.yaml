@@ -2,7 +2,8 @@ ro:
   alerts:
     victron:
       battery_alert:
-        message: "Nivelul bateriilor a scazut sub %{threshold}%!\n===Detalii baterii===\n\n"
+        title: "Nivelul bateriilor a scazut sub %{threshold}%!"
+        message: "===Detalii baterii===\n\n"
         soc: "Procentaj"
         power: "Putere"
         current: "Curent"

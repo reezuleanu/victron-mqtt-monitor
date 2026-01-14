@@ -1,7 +1,7 @@
 from i18n import t
 
 from victron_mqtt_monitor.alerts.base import BaseAlert
-from victron_mqtt_monitor.interfaces import BatteryInfo
+from victron_mqtt_monitor.interfaces import BatteryInfo, NotificationMessage
 
 
 class BatteryAlert(BaseAlert):
@@ -32,9 +32,9 @@ class BatteryAlert(BaseAlert):
         for notifier in self.notifiers:
             notifier.notify(message)
 
-    def build_notifier_message(self, battery: BatteryInfo) -> str:
+    def build_notifier_message(self, battery: BatteryInfo) -> NotificationMessage:
 
-        def _generate_report(battery_info: BatteryInfo) -> str:
+        def _generate_report(battery_info: BatteryInfo) -> NotificationMessage:
             """Generate a report to be sent via email"""
             mu = {
                 "soc": "%",
@@ -43,9 +43,10 @@ class BatteryAlert(BaseAlert):
                 "voltage": "V",
             }
 
-            message: str = t(
-                "alerts.victron.battery_alert.message", threshold=self.threshold * 100
+            title: str = t(
+                "alerts.victron.battery_alert.title", threshold=self.threshold * 100
             )
+            message: str = t("alerts.victron.battery_alert.message")
 
             d: dict[str, float] = battery_info.model_dump()
 
@@ -59,6 +60,9 @@ class BatteryAlert(BaseAlert):
             for k, v in translation_dict.items():
                 message = message + f"{v}: {round(d[k], 2)}{mu[k]}\n"
 
-            return message
+            return NotificationMessage(
+                title=title,
+                message=message,
+            )
 
         return _generate_report(battery)

@@ -58,3 +58,8 @@ class VictronStats(BaseModel):
             return v["value"]
         else:
             return v
+
+
+class NotificationMessage(BaseModel):
+    title: str
+    message: str

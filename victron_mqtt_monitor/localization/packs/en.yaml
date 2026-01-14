@@ -2,7 +2,8 @@ en:
   alerts:
     victron:
       battery_alert:
-        message: "Batteries level has fallen bellow %{threshold}%!\n===Battery Details===\n\n"
+        title: "Batteries level has fallen bellow %{threshold}%!"
+        message: "===Battery Details===\n\n"
         soc: "Percentage"
         power: "Power"
         current: "Current"
