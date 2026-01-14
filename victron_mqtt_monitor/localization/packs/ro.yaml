@@ -1,2 +1,9 @@
 ro:
-  hello: "world"
+  alerts:
+    victron:
+      battery_alert:
+        message: "Nivelul bateriilor a scazut sub %{threshold}%!\n===Detalii baterii===\n\n"
+        soc: "Procentaj"
+        power: "Putere"
+        current: "Curent"
+        voltage: "Tensiune"

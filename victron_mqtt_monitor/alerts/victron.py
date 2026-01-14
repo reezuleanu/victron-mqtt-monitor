@@ -1,3 +1,5 @@
+from i18n import t
+
 from victron_mqtt_monitor.alerts.base import BaseAlert
 from victron_mqtt_monitor.interfaces import BatteryInfo
 
@@ -32,9 +34,7 @@ class BatteryAlert(BaseAlert):
 
     def build_notifier_message(self, battery: BatteryInfo) -> str:
 
-        def _generate_report(
-            battery_info: BatteryInfo, language: str = "Romanian"
-        ) -> str:
+        def _generate_report(battery_info: BatteryInfo) -> str:
             """Generate a report to be sent via email"""
             mu = {
                 "soc": "%",
@@ -42,21 +42,19 @@ class BatteryAlert(BaseAlert):
                 "current": "A",
                 "voltage": "V",
             }
-            # TODO maybe replace the dictionary iterating with string formatting
-            match language:
-                case "Romanian":
-                    message = "Nivelul bateriilor a scazut sub {threshold}%!\n===Detalii baterii===\n\n"
-                    translation_dict = {
-                        "soc": "Procentaj",
-                        "power": "Putere",
-                        "current": "Curent",
-                        "voltage": "Tensiune",
-                    }
-                case _:
-                    raise Exception(f"Invalid report language: {language}")
 
-            message = message.format(threshold=self.threshold * 100)
+            message: str = t(
+                "alerts.victron.battery_alert.message", threshold=self.threshold * 100
+            )
+
             d: dict[str, float] = battery_info.model_dump()
+
+            translation_dict = {
+                "soc": t("alerts.victron.battery_alert.soc"),
+                "power": t("alerts.victron.battery_alert.power"),
+                "current": t("alerts.victron.battery_alert.current"),
+                "voltage": t("alerts.victron.battery_alert.voltage"),
+            }
 
             for k, v in translation_dict.items():
                 message = message + f"{v}: {round(d[k], 2)}{mu[k]}\n"
