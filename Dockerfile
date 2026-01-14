@@ -22,8 +22,16 @@ WORKDIR /app
 COPY --from=builder /app/dist/*.whl .
 
 RUN pip install --no-cache-dir *.whl && rm *.whl
+RUN apt update
+RUN apt install -y curl
 
 # disable docker log buffering
 ENV PYTHONUNBUFFERED=1
 
-CMD ["python", "-m", "victron_mqtt_monitor.main"]
+ENV HOST=0.0.0.0
+ENV PORT=8000
+
+HEALTHCHECK --interval=1m --timeout=5s \
+  CMD curl -f http://localhost:$PORT/health || exit 1
+
+CMD python -m uvicorn victron_mqtt_monitor.bootloader:app --host $HOST --port $PORT
