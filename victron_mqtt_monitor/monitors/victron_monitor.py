@@ -35,10 +35,12 @@ class VictronMonitor(BaseMonitor):
                 self._client.loop_start()
                 time.sleep(55)
                 self._client.loop_stop()
-        except KeyboardInterrupt:
-            # save tree
-            with open("dev/tree.json", "w") as fp:
-                json.dump(self.tree, fp, indent=2)
+        # except KeyboardInterrupt:
+        #     # save tree
+        #     with open("dev/tree.json", "w") as fp:
+        #         json.dump(self.tree, fp, indent=2)
+        except:
+            self.run()  # Retry mechanism in case mqtt breaks somehow
 
     def _build_callback(self) -> Callable:
 
@@ -53,7 +55,7 @@ class VictronMonitor(BaseMonitor):
             local_time = get_local_datetime()
 
             # TODO move stupid time restriction, maybe implement libactions for this mess (never thought i'd say that)
-            if local_time.hour > 9 and local_time.hour < 0:
+            if local_time.hour > 9:
                 self._check_alerts(flags.topic, decoded_message)
 
         return callback
