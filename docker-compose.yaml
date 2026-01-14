@@ -11,3 +11,7 @@ services:
       - SMTP_EMAIL=${SMTP_EMAIL}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - EMAIL_RECIPIENTS=${EMAIL_RECIPIENTS}
+
+      - APP_NAME=${APP_NAME}
+      - DEPLOYMENT=${DEPLOYMENT:-dev}
+      - LOCALE=${LOCALE:-en}
